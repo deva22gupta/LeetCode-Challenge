@@ -1,0 +1,24 @@
+class Solution
+{
+    //Function to reverse a linked list.
+    Node reverseList(Node head)
+    {
+        Node temp=head;
+        Stack<Integer> st = new Stack<Integer>();
+        while(temp!=null){
+            st.push(temp.data);
+            temp=temp.next;
+        }
+        Node newh=new Node(0);
+        Node ans=newh;
+        while(!st.isEmpty()){
+            int val = st.pop();
+            Node res=new Node(val);
+           // res=res.next;
+           newh.next=res;
+           newh=newh.next;
+        }
+        return ans.next;
+        // code here
+    }
+}
