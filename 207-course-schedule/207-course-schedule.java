@@ -1,23 +1,38 @@
-class Solution {
+
    
-      public boolean canFinish(int numCourses, int[][] prerequisites) {
-        List<Integer>[] neigh = new LinkedList[numCourses];
-        Queue<Integer> queue = new LinkedList<>();
-        int[] indegree = new int[numCourses];
-        int count = 0;
-        for (int i = 0; i < numCourses; i++) neigh[i] = new LinkedList<>();
-        for (int[] pair : prerequisites) {
-            neigh[pair[1]].add(pair[0]);
-            indegree[pair[0]]++;
+    class Solution {
+    public boolean canFinish(int numCourses, int[][] prerequisites) {
+        List<Integer>[] adj = new List[numCourses];
+        
+        for (int i = 0; i < numCourses; i++) {
+            adj[i] = new ArrayList<Integer>();
         }
-        for (int i = 0; i < indegree.length; i++)
-            if (indegree[i] == 0) queue.offer(i);
+        int[] indegree = new int[numCourses];
+        Queue<Integer> queue = new LinkedList();
+        
+        int finishCount = 0;
+        for (int i = 0; i < prerequisites.length; i++) {
+            int req = prerequisites[i][0];
+            int prereq = prerequisites[i][1];
+            adj[prereq].add(req);
+            indegree[req]++;
+        }
+        for (int i = 0; i < numCourses; i++) {
+            if (indegree[i] == 0) {
+                queue.offer(i);
+            }
+        }
         while (!queue.isEmpty()) {
             int course = queue.poll();
-            count++;
-            for (int adj : neigh[course])
-                if (--indegree[adj] == 0) queue.offer(adj);
+            finishCount++;
+            for (int nextCourse : adj[course]) {
+                indegree[nextCourse]--;
+                if (indegree[nextCourse] == 0) {
+                    queue.offer(nextCourse);
+                }
+            }
         }
-        return count == numCourses;
+        return finishCount == numCourses;
     }
-    }
+}
+    
