@@ -3,8 +3,8 @@ class Solution {
     public int lengthOfLongestSubstring(String s) {
         if(s.length()==0 || s==null) return 0;
         HashSet<Character> hs = new HashSet<>();
-        int j=0,max=0;
-      for(int i=0;i<s.length();i++){
+        int i=0, j=0,max=0;
+      for( i=0;i<s.length();i++){
           char c = s.charAt(i);
           while(hs.contains(c)){
               hs.remove(s.charAt(j));
