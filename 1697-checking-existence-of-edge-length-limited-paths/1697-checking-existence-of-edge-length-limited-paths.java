@@ -1,55 +1,50 @@
-class UnionFind {
-    int[] parents;
-    public UnionFind(int size) {
-        parents = new int[size];
-        for (int i = 0; i < size; i++) {
-            parents[i] = i;
-        }
-    }
-    
-    public int find(int node) {
-        List<Integer> path = new ArrayList<>();
-        while (node != parents[node]) {
-            path.add(node);
-            node = parents[node];
-        }
-        for (int p : path) {
-            parents[p] = node;
-        }
-        return node;
-    }
-    
-    public void union(int node1, int node2) {
-        int root1 = find(node1);
-        int root2 = find(node2);
-        if (root1 != root2) {
-            parents[root1] = root2;
-        }
-    }
-}
 class Solution {
-    public boolean[] distanceLimitedPathsExist(int n, int[][] edgeList, int[][] queries) {
-        List<int[]> reorderedQueries = new ArrayList<>();
-        for (int i = 0; i < queries.length; i++) {
-            reorderedQueries.add(new int[]{queries[i][0], 
-                                           queries[i][1], 
-                                           queries[i][2],
-                                           i});
-        }
-        Collections.sort(reorderedQueries, (a, b) -> Integer.compare(a[2], b[2]));        
-        Arrays.sort(edgeList, (a, b) -> Integer.compare(a[2], b[2]));
-        
-        UnionFind uf = new UnionFind(n);
-        boolean[] res = new boolean[queries.length];
-        for (int i = 0, j = 0; j < reorderedQueries.size(); j++) {
-            while (i < edgeList.length && edgeList[i][2] < reorderedQueries.get(j)[2]) {                
-                uf.union(edgeList[i][0], edgeList[i][1]);
-                i++;
-            }
-            if (uf.find(reorderedQueries.get(j)[0]) == uf.find(reorderedQueries.get(j)[1])) {
-                res[reorderedQueries.get(j)[3]] = true;
-            }
-        }
-        return res;
+   
+          public boolean[] distanceLimitedPathsExist(int n, int[][] edgeList, int[][] queries) {
+    // DISJOINT SET
+
+    Map<int[], Integer> original = new IdentityHashMap<>();
+    for (int i = 0; i < queries.length; i++) {
+      original.put(queries[i], i);
     }
-}
+    
+    
+    // start with smaller queries then union allowed edges and so on
+    parent = IntStream.rangeClosed(0, n).toArray();
+
+    Map<Integer, Boolean> result = new HashMap<>();
+    Arrays.sort(queries, Comparator.comparingInt(a -> a[2]));
+    Arrays.sort(edgeList, Comparator.comparingInt(a -> a[2]));
+    int qI = 0;
+    int eI = 0;
+    for (; qI < queries.length; qI++){
+      int[] query = queries[qI];
+      while (eI < edgeList.length && edgeList[eI][2] < query[2]){
+        union(edgeList[eI][0], edgeList[eI][1]);
+        eI++;
+      }
+      result.put(qI, find(query[0]) == find(query[1]));
+    }
+
+
+    boolean[] r= new boolean[queries.length];
+    for (int i = 0; i < queries.length; i++) {
+      r[original.get(queries[i])] = result.get(i);
+    }
+    return r;
+
+  }
+  
+  private int[] parent;
+
+  private void union(int a, int b) {
+    parent[find(a)] = find(b);
+  }
+
+  private int find(int a) {
+    if (a != parent[a]) {
+      parent[a] = find(parent[a]);
+    }
+    return parent[a];
+  }
+    }
