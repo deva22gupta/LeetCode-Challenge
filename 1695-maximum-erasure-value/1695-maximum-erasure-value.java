@@ -1,27 +1,27 @@
 class Solution {
-    public int maximumUniqueSubarray(int[] nums) {
+    public int maximumUniqueSubarray(int[] arr) {
+        int n = arr.length;
+        HashMap<Integer,Integer> map = new HashMap<>();
+        int j = 0;
+        int sum = 0;
+        int max = 0;
         
-        // Return the maximum score you can get by erasing exactly one subarray.
-        
-        //Sliding Window
-        HashSet<Integer> hs = new HashSet<>();
-        int i=0,j=0,sum=0,ans=0;
-        while(i<nums.length && j<nums.length){
-            
-            if(!hs.contains(nums[i])){
-                sum+=nums[i];
-                ans=Math.max(ans,sum);  // Max score to return
-                
-                hs.add(nums[i++]);
-            }else{
-                sum-=nums[j];
-                hs.remove(nums[j++]);
+        for(int i=0; i<n; i++){
+            sum += arr[i];
+            if(map.containsKey(arr[i])==false){
+                map.put(arr[i],1);
             }
-            
+            else{
+                while(arr[j]!=arr[i]){
+                    map.remove(arr[j]);
+                    sum -=arr[j];
+                    j++;
+                }
+                sum -= arr[j];
+                j++;
+            }
+            max = Math.max(sum,max);
         }
-        return ans;
-        
-        
-        
+        return max;
     }
 }
