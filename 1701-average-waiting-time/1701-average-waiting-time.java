@@ -1,5 +1,5 @@
 class Solution {
-    public double averageWaitingTime(int[][] A) {
+    public double averageWaitingTime(int[][] customers) {
      
         // first come first serve nonpremptive
         
@@ -13,12 +13,32 @@ class Solution {
                 
 //             }
         
-          double wait = 0, cur = 0;
-        for (int[] a: A) {
-            cur = Math.max(cur,  a[0]) + a[1];
-            wait += cur - 1.0 * a[0];
-        }
-        return 1.0 * wait / A.length;
+        //   int wait = 0, cur = 0;
+        // for (int[] a: A) {
+        //     cur = Math.max(cur,  a[0]) + a[1];
+        //     wait += cur - 1.0 * a[0];
+        // }
+        // return 1.0 * wait / A.length;
+        
+        
+        
+        
+        
+        
+        
+        
+          double totalWaitingTime = 0d;
+		int startTime = 0, arrivalTime = 0, preparationTime = 0;
+
+		for (int[] customer : customers) {
+			arrivalTime = customer[0];
+			preparationTime = customer[1];
+			startTime = Math.max(startTime, arrivalTime);
+			totalWaitingTime += preparationTime + (startTime - arrivalTime);
+			startTime += preparationTime;
+		}
+
+		return totalWaitingTime / customers.length;
         
         
         }
