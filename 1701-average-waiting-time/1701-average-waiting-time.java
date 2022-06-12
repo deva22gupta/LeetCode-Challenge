@@ -18,7 +18,7 @@ class Solution {
             cur = Math.max(cur,  a[0]) + a[1];
             wait += cur - 1.0 * a[0];
         }
-        return  wait / A.length;
+        return 1.0 * wait / A.length;
         
         
         }
