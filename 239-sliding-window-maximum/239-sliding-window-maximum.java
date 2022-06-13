@@ -1,8 +1,5 @@
 class Solution {
-    public int[] maxSlidingWindow(int[] nums, int k) {
-        //dp
-        // my first attempt
-
+   public int[] maxSlidingWindow(int[] nums, int k) {
   // assume nums is not null
   if (nums.length == 0 || k == 0) {
     return new int[0];
@@ -13,25 +10,17 @@ class Solution {
   // left & right
   int[] left = new int[n];
   int[] right = new int[n];
-
-  for (int i = 0; i < n; ++i) {
+  left[0] = nums[0]; // init
+  right[n - 1] = nums[n - 1];
+  
+  for (int i = 1; i < n; ++i) {
     // left
-    if (i % k == 0) { // beginning of the group
-      left[i] = nums[i];
-    } else {
-      left[i] = Math.max(left[i - 1], nums[i]);
-    }
-    
-    // right (* to be improved)
-    int temp = (i / k + 1) * k - 1; // last of the group
-    if (temp > n - 1) temp = n - 1;
-    
-    int j = temp - i % k;
-    if (j % k == (k - 1) || j == n - 1) {
-      right[j] = nums[j];
-    } else {
-      right[j] = Math.max(right[j + 1], nums[j]);
-    }
+    if (i % k == 0) left[i] = nums[i];
+    else            left[i] = Math.max(left[i - 1], nums[i]);
+    // right
+    int j = n - i - 1;
+    if (j % k == (k - 1)) right[j] = nums[j];
+    else                  right[j] = Math.max(right[j + 1], nums[j]);
   }
   
   // dp
@@ -41,4 +30,4 @@ class Solution {
   
   return result;
 }
-    }
+}
