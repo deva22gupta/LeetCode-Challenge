@@ -18,7 +18,7 @@ class Solution {
             // now iterating the array
             for(int i=0;i<nums.length;i++){
                 
-                
+                // this is after removing the condition
             //    if(nums[i]>penalty) {   // if the penalty is greater than the element
                 if(nums[i]%penalty==0){
                     ops+=nums[i]/penalty-1;     // 6/3  = 2  so 1 operation
