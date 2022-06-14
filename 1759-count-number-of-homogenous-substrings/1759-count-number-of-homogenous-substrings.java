@@ -15,7 +15,7 @@ class Solution {
           //  arr[i]=1;
             
             if(s.charAt(i)==s.charAt(i-1)){
-                arr[i]=(1%m+arr[i-1]%m)%m;
+                arr[i]=(1%m+arr[i-1]%m);
             }
             sum=(sum%m+arr[i]%m)%m;
         }
