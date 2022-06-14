@@ -1,40 +1,28 @@
 class Solution {
     public int minTrioDegree(int n, int[][] edges) {
-     
-//         int n=edges.length;
-//         int[][] adj = new int[n][2];
-//         int []deg= new int[n];
-//         for()
         
+         HashSet<Integer>[] adjList = new HashSet[n];
         
-       
-            int min = Integer.MAX_VALUE;
-            Map<Integer, Integer> degrees = new HashMap<>(); // vertex, degree
-            boolean[][] isEdge = new boolean[n + 1][n + 1];
-            
-            for (int[] edge : edges) {
-                degrees.put(edge[0], degrees.getOrDefault(edge[0], 0) + 1);
-                degrees.put(edge[1], degrees.getOrDefault(edge[1], 0) + 1);
-                isEdge[edge[0]][edge[1]] = true;
-                isEdge[edge[1]][edge[0]] = true;
+        for(int i = 0; i < n; i++)
+            adjList[i] = new HashSet<>();
+        
+        for(int[] edge: edges) {
+            adjList[edge[0] - 1].add(edge[1] - 1);
+            adjList[edge[1] - 1].add(edge[0] - 1);
+        }
+        
+        int min = Integer.MAX_VALUE;
+        
+        for(int i = 0; i < n; i++) {
+            for(int j = i + 1; j < n; j++) {
+                if(!adjList[i].contains(j))
+                    continue;
+                for(int k = j + 1; k < n; k++)
+                     if(adjList[j].contains(k) && adjList[i].contains(k))
+                         min = Math.min(min, adjList[i].size() + adjList[j].size() + adjList[k].size() - 6);
             }
-            
-            for (int[] edge : edges) {
-                for (int i = 1; i <= n; i++) {
-                    if (isEdge[i][edge[0]] && isEdge[i][edge[1]]) {
-                        // subtract 6 because we do not count inner edges of a trio
-                        int degree = degrees.get(i) + degrees.get(edge[0]) + degrees.get(edge[1]) - 6;
-                        min = Math.min(min, degree);
-                    }
-                }
-            }
-            
-            if (min == Integer.MAX_VALUE)
-                return -1;
-            return min;
+        }
         
-        
-        
-        
+        return min == Integer.MAX_VALUE? -1: min;
     }
 }
