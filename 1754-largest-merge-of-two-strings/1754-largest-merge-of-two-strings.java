@@ -30,32 +30,49 @@ class Solution {
         
         
         
-            int p1 = 0;
-            int p2 = 0;
-            StringBuilder sb = new StringBuilder();
+//             int p1 = 0;
+//             int p2 = 0;
+//             StringBuilder sb = new StringBuilder();
             
-            while(p1 < word1.length() || p2 < word2.length()) {
-                char c1 = p1 < word1.length() ? word1.charAt(p1) : 0;
-                char c2 = p2 < word2.length() ? word2.charAt(p2) : 0; 
-                if(c1 == c2) {
-                    // Use the remainder of the word as tie breaker
-                    // to help decide which pointer to increment
-                    if(word1.substring(p1).compareTo(word2.substring(p2)) > 0) {
-                        c2 = 0;
-                    } else {
-                        c1 = 0;
-                    }
-                }
-                if(c1 > c2) {
-                    sb.append(c1);
-                    p1++;
-                } else {
-                    sb.append(c2);
-                    p2++;
-                }
-            }
+//             while(p1 < word1.length() || p2 < word2.length()) {
+//                 char c1 = p1 < word1.length() ? word1.charAt(p1) : 0;
+//                 char c2 = p2 < word2.length() ? word2.charAt(p2) : 0; 
+//                 if(c1 == c2) {
+//                     // Use the remainder of the word as tie breaker
+//                     // to help decide which pointer to increment
+//                     if(word1.substring(p1).compareTo(word2.substring(p2)) > 0) {
+//                         c2 = 0;
+//                     } else {
+//                         c1 = 0;
+//                     }
+//                 }
+//                 if(c1 > c2) {
+//                     sb.append(c1);
+//                     p1++;
+//                 } else {
+//                     sb.append(c2);
+//                     p2++;
+//                 }
+//             }
             
-            return sb.toString();
+//             return sb.toString();
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+         if (word1.length() == 0  || word2.length() == 0)
+            return word1 +word2;
+        if (word1.compareTo(word2) > 0)
+            return word1.charAt(0) + largestMerge(word1.substring(1), word2);
+        return word2.charAt(0) + largestMerge(word1, word2.substring(1));
         
         
     }
