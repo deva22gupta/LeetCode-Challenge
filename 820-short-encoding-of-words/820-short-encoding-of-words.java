@@ -13,6 +13,7 @@ class Solution {
         }
         
         return encoding.length();
+        // here the TC:  O(NlogN)         SC:  O(length of array)
         
         
         
