@@ -20,6 +20,7 @@ class Solution {
         
         
         //using hashset if present will remove from the set
+        // TC:  O(W^2)       SC: O(W)       W is the length of the word
         HashSet<String> hs = new HashSet<>(Arrays.asList(words));
         // already words are there in set
         for(String str:words){
@@ -39,6 +40,9 @@ class Solution {
         
         
         
+        
+        //Third method is by using trie here
+        // TC: O(W)   SC:O(w)
         
         
         
