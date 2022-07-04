@@ -1,5 +1,7 @@
 class Solution {
     public int[] rearrangeArray(int[] nums) {
+        // 2 array and 5 variable
+        
      int n= nums.length;
         int arrp [] = new int[n/2];
         int arrn[] = new int [n/2];
