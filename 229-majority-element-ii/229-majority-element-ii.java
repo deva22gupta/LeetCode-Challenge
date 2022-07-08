@@ -1,19 +1,14 @@
 class Solution {
     public List<Integer> majorityElement(int[] nums) {
-        int count=0;
-        boolean arr[] = new boolean [nums.length];
-        ArrayList<Integer> al = new ArrayList<Integer>();
+     
+        List<Integer> li = new ArrayList<>();
+        HashMap<Integer,Integer> hs = new HashMap<>();
         for(int i=0;i<nums.length;i++){
-            if (arr[i]==true) continue;
-            count=1;
-            arr[i]=true;
-            for(int j=i+1;j<nums.length;j++){
-                if(nums[i]==nums[j]) {
-                    count++;
-                    arr[j]=true;
-            }}
-            if(count>nums.length/3) al.add(nums[i]);
+            hs.put(nums[i],hs.getOrDefault(nums[i],0)+1);
         }
-        return al;
+        for(int x:hs.keySet()){
+            if(hs.get(x)>nums.length/3) li.add(x);
+        }
+        return li;
     }
 }
