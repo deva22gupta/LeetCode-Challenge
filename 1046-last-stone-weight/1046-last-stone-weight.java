@@ -1,7 +1,15 @@
 class Solution {
     public int lastStoneWeight(int[] stones) {
        // PriorityQueue<Integer> pq = new PriorityQueue<>((stones,a,b) -> b-a );
-             Queue<Integer> maxPq = new PriorityQueue<>(stones.length, Comparator.reverseOrder());
+        
+             //Queue<Integer> maxPq = new PriorityQueue<>(stones.length, Comparator.reverseOrder());
+        	    Comparator cmp = new Comparator<Integer>(){
+        public int compare(Integer first, Integer second){
+            return second.compareTo(first);
+        }
+    };
+    Queue<Integer> maxPq = new PriorityQueue<>(cmp);
+		
         for (int stone : stones) {
             maxPq.add(stone);
         }
