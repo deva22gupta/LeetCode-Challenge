@@ -1,24 +1,30 @@
 class Solution {
-
-    public boolean isMatch(String s, String p) {
-        boolean[][] match=new boolean[s.length()+1][p.length()+1];
-        match[s.length()][p.length()]=true;
-        for(int i=p.length()-1;i>=0;i--){
-            if(p.charAt(i)!='*')
-                break;
+  public boolean isMatch(String s, String p) {
+        if(s==null || p == null)
+            return s==p;
+        boolean[][] dp = new boolean[s.length()+1][p.length()+1];
+        dp[0][0]=true;
+        for(int row=0, col=1; col<dp[0].length;col++){
+            if(p.charAt(col-1) == '*')
+                dp[row][col]=true;
             else
-                match[s.length()][i]=true;
+                break;
+            
         }
-        for(int i=s.length()-1;i>=0;i--){
-            for(int j=p.length()-1;j>=0;j--){
-                if(s.charAt(i)==p.charAt(j)||p.charAt(j)=='?')
-                        match[i][j]=match[i+1][j+1];
-                else if(p.charAt(j)=='*')
-                        match[i][j]=match[i+1][j]||match[i][j+1];
-                else
-                    match[i][j]=false;
+        
+        for(int row=1; row<dp.length;row++){
+            for(int col=1;col<dp[0].length;col++){
+                char str = s.charAt(row-1);
+                char pattn = p.charAt(col-1);
+                if(str == pattn || pattn == '?'){
+                    dp[row][col] = dp[row-1][col-1];
+                } else if(pattn == '*'){
+                    dp[row][col] = dp[row][col-1] || dp[row-1][col];
+                }
             }
         }
-        return match[0][0];
+        
+        return dp[s.length()][p.length()];
+        
     }
 }
