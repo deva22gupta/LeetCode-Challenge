@@ -21,12 +21,14 @@ class Solution {
         return true;
     }
     
-    private boolean isValid(char[][] board, int row, int col, char num) {
-        int blkrow = (row / 3) * 3, blkcol = (col / 3) * 3; // Block no. is i/3, first element is i/3*3
-        for (int i = 0; i < 9; i++)
-            if (board[i][col] == num || board[row][i] == num || 
-                    board[blkrow + i / 3][blkcol + i % 3] == num)
-                return false;
+     private boolean isValid(char[][] board, int row, int col, char c){
+        int regionRow = 3 * (row / 3);  //region start row
+        int regionCol = 3 * (col / 3);    //region start col
+        for (int i = 0; i < 9; i++) {
+            if (board[i][col] == c) return false; //check row
+            if (board[row][i] == c) return false; //check column
+            if (board[regionRow + i / 3][regionCol + i % 3] == c) return false; //check 3*3 block
+        }
         return true;
     }
 }
