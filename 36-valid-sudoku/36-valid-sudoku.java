@@ -1,20 +1,24 @@
 class Solution {
-    public boolean isValidSudoku(char[][] board) {
-          for(int i = 0; i<9; i++){
-        HashSet<Character> rows = new HashSet<Character>();
-        HashSet<Character> columns = new HashSet<Character>();
-        HashSet<Character> cube = new HashSet<Character>();
-        for (int j = 0; j < 9;j++){
-            if(board[i][j]!='.' && !rows.add(board[i][j]))
-                return false;
-            if(board[j][i]!='.' && !columns.add(board[j][i]))
-                return false;
-            int RowIndex = 3*(i/3);
-            int ColIndex = 3*(i%3);
-            if(board[RowIndex + j/3][ColIndex + j%3]!='.' && !cube.add(board[RowIndex + j/3][ColIndex + j%3]))
-                return false;
+ 
+       public boolean isValidSudoku(char[][] board) {
+        for(int i = 0;i < 9;i++){
+            boolean[] rowCheck = new boolean[9];
+            boolean[] colCheck = new boolean[9];
+            boolean[] boxCheck = new boolean[9];
+            for(int j = 0;j< 9;j++){
+                if(board[i][j] == '.'){}
+                else if(rowCheck[board[i][j] - '1']) return false;
+                else rowCheck[board[i][j] - '1'] = true;
+                if(board[j][i] == '.'){}
+                else if(colCheck[board[j][i] - '1']) return false;
+                else colCheck[board[j][i] - '1'] = true;
+                int m = i/3*3 + j/3;
+                int n = i%3*3 + j%3;
+                if(board[m][n] == '.') {}
+                else if(boxCheck[board[m][n] - '1']) return false;
+                else boxCheck[board[m][n] - '1'] = true;
+            }
         }
+        return true;
+    } 
     }
-    return true;
-}
-}
