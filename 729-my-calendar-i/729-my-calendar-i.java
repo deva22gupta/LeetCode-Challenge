@@ -8,7 +8,9 @@ class MyCalendar {
     
     public boolean book(int start, int end) {
         for(int[] b:books){
-            if(Math.max(b[0],start)<Math.min(b[1],end)) return false;
+          //  if(Math.max(b[0],start)<Math.min(b[1],end)) return false;
+            
+            if(b[0]<end && start<b[1]) return false;
         }
         books.add(new int[]{start,end});
         return true;
