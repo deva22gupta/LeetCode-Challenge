@@ -25,7 +25,7 @@ class Solution {
         }
         
         if(k!=0 && digit-k>=0){
-              dfs(i*10+(digit-k),digit-k,n-1,k,li);
+              dfs(i*10+digit-k,digit-k,n-1,k,li);
         }
     }
 }
