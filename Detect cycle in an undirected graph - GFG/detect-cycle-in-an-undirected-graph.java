@@ -1,4 +1,4 @@
-// { Driver Code Starts
+//{ Driver Code Starts
 import java.util.*;
 import java.lang.*;
 import java.io.*;
@@ -28,50 +28,36 @@ class GFG {
                 System.out.println("0");
         }
     }
-}// } Driver Code Ends
-
-class Node{
-    int first;int second;
-    Node(int first,int second){
-        this.first=first;
-        this.second=second;
-    }
 }
+// } Driver Code Ends
+
+
 class Solution {
     // Function to detect cycle in an undirected graph.
     public boolean isCycle(int V, ArrayList<ArrayList<Integer>> adj) {
         // Code here
-        boolean vis[] = new boolean[V];
         
+        boolean vis[] = new boolean[V];
         for(int i=0;i<V;i++){
-            if(vis[i]==false ) {
-               if( bfs(i,vis,adj)) {
-                   return true;
-               }
+            if(!vis[i]){
+              if(dfs(vis,adj,-1,i)) return true;
             }
         }
         return false;
-    }
-    boolean bfs(int i,boolean vis[],ArrayList<ArrayList<Integer>> adj){
-        Queue<Node> q = new LinkedList<>();
-        q.add(new Node(i,-1));
-        vis[i]=true;
-        while(!q.isEmpty()){
-        Node n=q.poll();
-        int a=n.first;
-        int p=n.second;
         
-        // a is the parent
-        for(int nei:adj.get(a)){
-            if(!vis[nei]){
-                q.add(new Node(nei,a));
-                vis[nei]=true;
-            }
-            else if(nei!=p) return true;
-        }
         
-            }
-            return false;
     }
     
+    boolean dfs( boolean vis[],ArrayList<ArrayList<Integer>> adj,int parent,int i){
+        
+        vis[i]=true;
+        for(int a:adj.get(i)){
+            if(!vis[a]){
+               if (dfs(vis,adj,i,a)) 
+               return true;
+            }
+            else if(parent!=a) return true;         // here the node is already visited and it is not the parent node
+        }
+        return false;
+    }
 }
