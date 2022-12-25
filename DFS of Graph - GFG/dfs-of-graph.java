@@ -1,4 +1,4 @@
-// { Driver Code Starts
+//{ Driver Code Starts
 // Initial Template for Java
 import java.util.*;
 import java.lang.*;
@@ -30,6 +30,7 @@ class GFG {
         }
     }
 }
+
 // } Driver Code Ends
 
 
@@ -37,26 +38,30 @@ class Solution {
     // Function to return a list containing the DFS traversal of the graph.
     public ArrayList<Integer> dfsOfGraph(int V, ArrayList<ArrayList<Integer>> adj) {
         // Code here
-          ArrayList<Integer> storedfs = new ArrayList<>();
-        boolean vis[]= new boolean[V+1];
+        ArrayList<Integer> al = new ArrayList<>();
+        boolean vis[] = new boolean[V];
         for(int i=0;i<V;i++){
-            if(!vis[i] ){
-                dfs(i,vis,adj,storedfs);
-            }
+        
+        if(vis[i]==false){
+            dfstraversal(vis,V,adj,i,al);
+            
         }
-        return storedfs;
-    }
-    
-    
-    public static void dfs(int node,boolean vis[], ArrayList<ArrayList<Integer>> adj, ArrayList<Integer> storedfs ){
-        storedfs.add(node);
-        vis[node]=true;
-        for(Integer it:adj.get(node)){
-            if(vis[it]==false ){
-                dfs(it,vis,adj,storedfs);
-            }
+        
         }
+        return al;
     }
         
-    
-}
+        void dfstraversal(boolean vis[],int V, ArrayList<ArrayList<Integer>> adj,int i,ArrayList<Integer> al){
+            vis[i]=true;al.add(i);
+            for(Integer it:adj.get(i)){
+                if(vis[it]==false){
+                    dfstraversal(vis,V,adj,it,al);
+                }
+            }
+        }
+        
+        
+        
+        
+        
+    }
